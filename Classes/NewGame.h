@@ -8,15 +8,23 @@
 
 #include "cocos2d.h"
 
-class NewGame : public cocos2d::Scene{
+USING_NS_CC;
+
+class NewGame : public cocos2d::Scene {
 public:
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene *createScene();
 
     virtual bool init();
 
     // implement the "static create()" method manually
     CREATE_FUNC(NewGame);
+private:
+    Sprite *sprite;
 
+    bool onTouchBegan(Touch *tTouch, Event *eEvent);//手指按下事件
+    void onTouchMoved(Touch *tTouch, Event *eEvent);//手指移动事件
+    void onTouchEnded(Touch *tTouch, Event *eEvent);//手指离开事件
+    const char *NEWGAME = " NEWGAME ";
 };
 
 

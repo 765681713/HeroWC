@@ -23,6 +23,8 @@
  ****************************************************************************/
 
 #include "HelloWorldScene.h"
+#include "NewGame.h"
+#include <android/log.h>
 
 USING_NS_CC;
 
@@ -73,15 +75,15 @@ bool HelloWorld::init() {
     if (sprite == nullptr) {
         problemLoading("'HelloWorld.png'");
     } else {
-        sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-        this->addChild(sprite, 0);
+        sprite->setAnchorPoint(Vec2::ZERO);
+        sprite->setPosition(Vec2(0, 0) + origin);
+        this->addChild(sprite, 2);
     }
     return true;
 }
 
 
 void HelloWorld::menuCloseCallback(Ref *pSender) {
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
+    auto director = Director::getInstance();
+    director->pushScene(NewGame::createScene());
 }

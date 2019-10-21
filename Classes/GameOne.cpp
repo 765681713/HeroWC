@@ -3,6 +3,7 @@
 //
 
 #include "GameOne.h"
+
 USING_NS_CC;
 
 Scene *GameOne::createScene() {
@@ -19,16 +20,10 @@ bool GameOne::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("456.jpg");
-    if (sprite == nullptr) {
-    } else {
-        // position the sprite on the center of the screen
-        sprite->setPosition(
-                Vec2(150,250));
+    LabelAtlas *diceCount = LabelAtlas::create("150", "n_15.png", 18, 24, ',');
+    diceCount->setAnchorPoint(Vec2::ZERO);
+    diceCount->setPosition(100, 150);
+    this->addChild(diceCount, 2);
 
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
     return true;
 }
