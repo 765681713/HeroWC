@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "HelloWorldScene.h"
-#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -33,8 +32,7 @@ Scene *HelloWorld::createScene() {
 
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char *filename) {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+    __android_log_print(ANDROID_LOG_ERROR, "problemLoading ", "Error while loading: %s\n", filename);
 }
 
 // on "init" you need to initialize your instance
@@ -48,31 +46,25 @@ bool HelloWorld::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
     const std::string nor = "CloseNormal.png";
- 
+    const std::string cls = "CloseSelected.png";
+    MenuItemImage *image = MenuItemImage::create(nor, cls, CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    // create menu, it's an autorelease object
+    image->setAnchorPoint(Vec2::ZERO);
+    image->runAction(ScaleTo::create(1, 3));
+    Menu *menu = Menu::create(image, nullptr);
+    menu->setPosition(visibleSize / 2);
 
-    /////////////////////////////
-    // 3. add your codes below...
+    __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " visibleSize = %f ,%f", visibleSize.width, visibleSize.height);
+    __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " origin = %f ,%f", origin.x, origin.y);
 
-    // add a label shows "Hello World"
-    // create and initialize a label
+    this->addChild(menu, 2);
 
     auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     if (label == nullptr) {
         problemLoading("'fonts/Marker Felt.ttf'");
     } else {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
-
-        // add the label as a child to this layer
+        label->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height));
         this->addChild(label, 1);
     }
 
@@ -81,11 +73,7 @@ bool HelloWorld::init() {
     if (sprite == nullptr) {
         problemLoading("'HelloWorld.png'");
     } else {
-        // position the sprite on the center of the screen
-        sprite->setPosition(
-                Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
-        // add the sprite as a child to this layer
+        sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
         this->addChild(sprite, 0);
     }
     return true;
@@ -95,11 +83,5 @@ bool HelloWorld::init() {
 void HelloWorld::menuCloseCallback(Ref *pSender) {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
 
 }
