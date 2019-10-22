@@ -52,33 +52,33 @@ bool HelloWorld::init() {
     const std::string cls = "CloseSelected.png";
     MenuItemImage *image = MenuItemImage::create(nor, cls, CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    image->setAnchorPoint(Vec2::ZERO);
+    image->setAnchorPoint(Vec2(0, 1));
     image->runAction(ScaleTo::create(1, 3));
     Menu *menu = Menu::create(image, nullptr);
-    menu->setPosition(visibleSize / 2);
+    menu->setPosition(Vec2(0, visibleSize.height));
 
     __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " visibleSize = %f ,%f", visibleSize.width, visibleSize.height);
     __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " origin = %f ,%f", origin.x, origin.y);
 
     this->addChild(menu, 2);
+//    Sprite3D *man = Sprite3D::create("dao.c3b");
+//    man->setTexture("cike.png");
+//    man->setAnchorPoint(Vec2(0.5, 1));
+//    man->setPosition(visibleSize / 2);
+//    man->setScale(2);
+//    this->addChild(man, 3);
+//    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(360, 0, 0));
+//    RotateBy *rotateBy2 = RotateBy::create(10, Vec3(0, 360, 0));
+//    RotateBy *rotateBy3 = RotateBy::create(10, Vec3(0, 0, 360));
+//    auto squence = Sequence::create(rotateBy1, rotateBy2, rotateBy3, NULL);
+//    man->runAction(squence);
+//    auto animation = Animation3D::create("dao.c3b");
+//    auto play = Animate3D::create(animation, 0.f, 1.0f);
+//    man->runAction(RepeatForever::create(play));//循环播放
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr) {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    } else {
-        label->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height));
-        this->addChild(label, 1);
-    }
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr) {
-        problemLoading("'HelloWorld.png'");
-    } else {
-        sprite->setAnchorPoint(Vec2::ZERO);
-        sprite->setPosition(Vec2(0, 0) + origin);
-        this->addChild(sprite, 2);
-    }
+
+
     return true;
 }
 

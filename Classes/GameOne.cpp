@@ -20,10 +20,5 @@ bool GameOne::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    LabelAtlas *diceCount = LabelAtlas::create("150", "n_15.png", 18, 24, ',');
-    diceCount->setAnchorPoint(Vec2::ZERO);
-    diceCount->setPosition(100, 150);
-    this->addChild(diceCount, 2);
-
     return true;
 }

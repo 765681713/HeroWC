@@ -7,15 +7,16 @@
 
 #include "cocos2d.h"
 
-class GameOne : public cocos2d::Scene{
-    public:
-        static cocos2d::Scene* createScene();
+using namespace std;
 
-        virtual bool init();
+class GameOne : public cocos2d::Scene {
+public:
+    static cocos2d::Scene *createScene();
 
-        // implement the "static create()" method manually
-        CREATE_FUNC(GameOne);
+    virtual bool init();
+
+    // implement the "static create()" method manually
+    CREATE_FUNC(GameOne);
 };
-
 
 #endif //PROJ_ANDROID_GAMEONE_H
