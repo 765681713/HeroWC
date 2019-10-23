@@ -17,6 +17,10 @@ bool NewGame::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+
+
+
+
     sprite = Sprite::create("HelloWorld.png");
 //    CCASSERT(!sprite, "view = 123456789");
     if (sprite != nullptr) {
