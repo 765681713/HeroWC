@@ -17,7 +17,24 @@ bool NewGame::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+//    mySprite = Sprite3D::create("dummyAtt.c3t");
+//    mySprite->setTexture("hear.png");
 
+//    int i = mySprite->getMeshCount();
+//    for (int j = 0; j < i; j++) {
+//        Mesh* mesh = mySprite->getMeshByIndex(j);
+//        string name = mesh->getName();
+//        mesh->setTexture("zjyf.png");
+//        mesh->setVisible(true);
+//        __android_log_print(ANDROID_LOG_ERROR, "dummyAtt getName = ", "%s", name.c_str());
+//    }
+//    __android_log_print(ANDROID_LOG_ERROR, "dummyAtt getMeshCount = ", "%i", i);
+//    mySprite->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
+//    mySprite->setScale(0.5);
+//    this->addChild(mySprite, 3);
+
+//    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(360, 0, 0));
+//    mySprite->runAction(RepeatForever::create(rotateBy1));
 
 
 
@@ -42,8 +59,10 @@ bool NewGame::init() {
 bool NewGame::onTouchBegan(Touch *tTouch, Event *eEvent) {
     __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.x = %f", tTouch->getLocation().x);
     __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.y = %f", tTouch->getLocation().y);
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " sprite->getBoundingBox().size.width = %f", sprite->getBoundingBox().size.width);
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, "sprite->getBoundingBox().size.height = %f", sprite->getBoundingBox().size.height);
+    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " sprite->getBoundingBox().size.width = %f",
+                        sprite->getBoundingBox().size.width);
+    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, "sprite->getBoundingBox().size.height = %f",
+                        sprite->getBoundingBox().size.height);
     if (sprite->getBoundingBox().containsPoint(tTouch->getLocation())) {//判断触摸点是否在目标的范围内
         __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "true");
         return true;

@@ -89,7 +89,6 @@ bool HelloWorld::init() {
     this->addChild(man, 3);
 
     cameraExample = Camera::createPerspective(60, (GLfloat) visibleSize.width / visibleSize.height, 1, 500);
-
     cameraExample->setPosition3D(Vec3(0, 20, -20));
     cameraExample->lookAt(man->getPosition3D());
     //摄像机标识
@@ -97,6 +96,12 @@ bool HelloWorld::init() {
     man->addChild(cameraExample);
     schedule(schedule_selector(HelloWorld::updateTime));
 
+    DirectionLight *light = DirectionLight::create(Vec3(-1, -1, 0), Color3B(0, 255, 0));
+    light->setCameraMask(2);
+    light->setEnabled(true);
+    this->addChild(light);
+    //-1受所有光照 0不受任何光照
+    man->setLightMask(-1);
 //    auto animation1 = Animation3D::create("Dark/Dark Treant@HeadAttack.c3b");
 //    auto play1 = Animate3D::create(animation1, 0.f, 2.0f);
 //    man->runAction(RepeatForever::create(play1));

@@ -20,6 +20,7 @@ public:
     CREATE_FUNC(NewGame);
 private:
     Sprite *sprite;
+    Sprite3D *mySprite;
 
     bool onTouchBegan(Touch *tTouch, Event *eEvent);//手指按下事件
     void onTouchMoved(Touch *tTouch, Event *eEvent);//手指移动事件
