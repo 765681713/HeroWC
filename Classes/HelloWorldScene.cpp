@@ -32,7 +32,8 @@ Scene *HelloWorld::createScene() {
 
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char *filename) {
-    __android_log_print(ANDROID_LOG_ERROR, "problemLoading ", "Error while loading: %s\n", filename);
+    __android_log_print(ANDROID_LOG_ERROR, "problemLoading ", "Error while loading: %s\n",
+                        filename);
 }
 
 // on "init" you need to initialize your instance
@@ -59,6 +60,13 @@ bool HelloWorld::init() {
     __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " origin = %f ,%f", origin.x, origin.y);
 
     this->addChild(menu, 2);
+
+//    Camera *cameraExample = Camera::createPerspective(30, (GLfloat) visibleSize.width / visibleSize.height, 10, 200);
+//    cameraExample->setPosition3D(Vec3(-100, 100, -50));
+//    cameraExample->lookAt(Vec3(-100, 0, -50), Vec3(0, 1, 0));
+//    //摄像机标识
+//    cameraExample->setCameraFlag(CameraFlag::USER1);
+//    this->addChild(cameraExample);
 //    Sprite3D *man = Sprite3D::create("dao.c3b");
 //    man->setTexture("cike.png");
 //    man->setAnchorPoint(Vec2(0.5, 1));
@@ -76,12 +84,23 @@ bool HelloWorld::init() {
 
     man = Sprite3D::create("Dark/Dark Treant@HeadAttack.c3b");
     man->setTexture("Dark/Dark Treant-Purple.png");
-    man->setPosition(visibleSize / 2);
+    man->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
     man->setScale(0.5);
     this->addChild(man, 3);
-    auto animation1 = Animation3D::create("Dark/Dark Treant@HeadAttack.c3b");
-    auto play1 = Animate3D::create(animation1, 0.f, 2.0f);
-    man->runAction(RepeatForever::create(play1));
+
+    cameraExample = Camera::createPerspective(60, (GLfloat) visibleSize.width / visibleSize.height, 1, 500);
+
+    cameraExample->setPosition3D(Vec3(0, 20, -20));
+    cameraExample->lookAt(man->getPosition3D());
+    //摄像机标识
+    cameraExample->setCameraFlag(CameraFlag::USER1);
+    man->addChild(cameraExample);
+    schedule(schedule_selector(HelloWorld::updateTime));
+
+//    auto animation1 = Animation3D::create("Dark/Dark Treant@HeadAttack.c3b");
+//    auto play1 = Animate3D::create(animation1, 0.f, 2.0f);
+//    man->runAction(RepeatForever::create(play1));
+//    man->setCameraMask(2);
 
     auto i = man->getAttachedNodeCount();
 //    Sprite3D *manTop = Sprite3D::create("Dark/Dark Treant Seed.c3b");
@@ -92,7 +111,14 @@ bool HelloWorld::init() {
     fire->setAnchorPoint(Vec2(0.5, 0));
     fire->setScale(0.4);
     man->getAttachNode("RigHead")->addChild(fire);
+    auto mCount = man->getMeshCount();
+    if (mCount > 0) {
+        Mesh *ms = man->getMeshByIndex(0);
+        std::string name = ms->getName();
+        __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " ms->getName() = %s", name.c_str());
+    }
     __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " getAttachedNodeCount = %i", i);
+    __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " getMeshCount = %i", mCount);
 //    manTop->setTexture("Dark/Dark Treant Seed-Blue.png");
 //    manTop->setPosition(Vec2(50, visibleSize.height / 2));
 //    manTop->setScale(2);
@@ -111,29 +137,32 @@ bool HelloWorld::init() {
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = [&](Touch *tTouch, Event *event) {
-        if (man->getBoundingBox().containsPoint(tTouch->getLocation())) {//判断触摸点是否在目标的范围内
-            __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "true");
-            beginX = tTouch->getLocation().x;
-            beginY = tTouch->getLocation().y;
-            return true;
-        } else {
-            __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "false");
-            return false;
-        }
+//        if (man->getBoundingBox().containsPoint(tTouch->getLocation())) {//判断触摸点是否在目标的范围内
+//            __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "true");
+//
+//            return true;
+//        } else {
+//            __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "false");
+//            return false;
+//        }
+        beginX = tTouch->getLocation().x;
+        beginY = tTouch->getLocation().y;
+        return true;
     };
     listener->onTouchMoved = [&](Touch *tTouch, Event *event) {
         float moveX = tTouch->getLocation().x - beginX;
         float moveY = tTouch->getLocation().y - beginY;
-        RotateTo *to;
+        RotateBy *to;
         if (moveX > moveY) {
             float rotate = 360 / 200 * moveX;
             float time = 2 * rotate / 360;
-            to = RotateTo::create(time, Vec3(rotate, 0, 0));
-
+            to = RotateBy::create(time, Vec3(0, rotate, 0));
+            __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " rotate = %f", rotate);
         } else {
             float rotate = 360 / 200 * moveY;
             float time = 2 * rotate / 360;
-            to = RotateTo::create(time, Vec3(0, rotate, 0));
+            to = RotateBy::create(time, Vec3(0, 0, rotate));
+            __android_log_print(ANDROID_LOG_ERROR, "ANDROID_LOG_ERROR ", " rotate = %f", rotate);
         }
         man->runAction(to);
     };
@@ -145,4 +174,11 @@ bool HelloWorld::init() {
 void HelloWorld::menuCloseCallback(Ref *pSender) {
     auto director = Director::getInstance();
     director->pushScene(NewGame::createScene());
+}
+
+void HelloWorld::updateTime(float f) {
+    if (cameraExample) {
+        cameraExample->setPosition3D(Vec3(0, 20, -20));
+        cameraExample->lookAt(man->getPosition3D(), Vec3(0, 1, 0));
+    }
 }
