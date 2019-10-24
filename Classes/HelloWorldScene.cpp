@@ -83,7 +83,7 @@ bool HelloWorld::init() {
 //    man->runAction(RepeatForever::create(play));//循环播放
 
     man = Sprite3D::create("Dark/Dark Treant@HeadAttack.c3b");
-    man->setTexture("Dark/Dark Treant-Purple.png");
+    man->setTexture("Dark/Dark Treant-Purple.psd");
     man->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
     man->setScale(0.5);
     this->addChild(man, 3);
@@ -96,7 +96,7 @@ bool HelloWorld::init() {
     man->addChild(cameraExample);
     schedule(schedule_selector(HelloWorld::updateTime));
 
-    DirectionLight *light = DirectionLight::create(Vec3(-1, -1, 0), Color3B(0, 255, 0));
+    DirectionLight *light = DirectionLight::create(Vec3(-1, -1, 0), Color3B(255, 255, 255));
     light->setCameraMask(2);
     light->setEnabled(true);
     this->addChild(light);

@@ -1,10 +1,10 @@
 #ifdef GL_ES
-precision lowp float;
+varying lowp vec4 v_color;
+#else
+varying vec4 v_color;
 #endif
-
-varying vec4 v_fragmentColor;
 
 void main()
 {
-    gl_FragColor = v_fragmentColor;
+    gl_FragColor = v_color;
 }

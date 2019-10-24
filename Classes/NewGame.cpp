@@ -17,27 +17,65 @@ bool NewGame::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-//    mySprite = Sprite3D::create("dummyAtt.c3t");
-//    mySprite->setTexture("hear.png");
+    mySprite = Sprite3D::create("Lich1.c3b");
+    mySprite->setTexture("Lich-Cyan.png");
+//    mySprite->setColor(Color3B(255,0,255));
+
+//    auto shader = GLProgram::createWithFilenames("vert0.vert", "frag0.frag");
+//    GLProgramState *state = GLProgramState::create(shader);
+//    state->setUniformVec3()
+//    state->applyUniforms();
+//    mySprite->setGLProgram()
+//    mySprite->setGLProgramState(state);
 
 //    int i = mySprite->getMeshCount();
+
+//    ParticleFire *fire = ParticleFire::create();
+//    fire->setScale(0.2);
+//    fire->setColor(Color3B(255, 0, 0));
+//    fire->setCameraMask(1);
+//    fire->setPosition3D(Vec3(0, 0, 0));
+//    fire->setAnchorPoint(Vec2(0, 0));
+//    fire->setTexture(Director::getInstance()->getTextureCache()->addImage("fire.png"));
+//    mySprite->getNode("Rig")->addChild(fire);
+//    mySprite->addChild(fire);
+//    __android_log_print(ANDROID_LOG_ERROR, "mySprite getAttachedNodeCount = ", "%i",
+//                        mySprite->getAttachedNodeCount());
+//    AttachNode *node = mySprite->getAttachNode("Rig");
+//    mySprite->getMeshByIndex(1)->setTexture("Lich-Lime.png");
+//    mySprite->addChild(fire);
+//    __android_log_print(ANDROID_LOG_ERROR, "mySprite getMeshCount = ", "%i", i);
+//    Mesh *mesh = mySprite->getMeshByIndex(1);
+//    __android_log_print(ANDROID_LOG_ERROR, "Mesh getName = ", "%s",
+//                        mesh->getName().c_str());
+//    __android_log_print(ANDROID_LOG_ERROR, "Mesh getIndexCount = ", "%i",
+//                        mesh->getIndexCount());
 //    for (int j = 0; j < i; j++) {
-//        Mesh* mesh = mySprite->getMeshByIndex(j);
-//        string name = mesh->getName();
-//        mesh->setTexture("zjyf.png");
-//        mesh->setVisible(true);
-//        __android_log_print(ANDROID_LOG_ERROR, "dummyAtt getName = ", "%s", name.c_str());
+//        Mesh *mesh = mySprite->getMeshByIndex(j);
+//
+//        __android_log_print(ANDROID_LOG_ERROR, "Mesh getName = ", "%s",
+//                            mesh->getName().c_str());
 //    }
-//    __android_log_print(ANDROID_LOG_ERROR, "dummyAtt getMeshCount = ", "%i", i);
-//    mySprite->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
-//    mySprite->setScale(0.5);
-//    this->addChild(mySprite, 3);
+//    AttachNode *attachNode = mySprite->getAttachNode("Rig");
 
-//    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(360, 0, 0));
-//    mySprite->runAction(RepeatForever::create(rotateBy1));
+    mySprite->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
+    mySprite->setCameraMask(1);
+    mySprite->setScale(2);
+    this->addChild(mySprite, 3);
+//    auto animation = Animation3D::create("shiliaoyuan.c3b");
+//    if (animation) {
+//        auto play = Animate3D::create(animation, 0.f, 1.0f);
+//        mySprite->runAction(RepeatForever::create(play));//循环播放
+//    }
 
-
-
+    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(0, 360, 0));
+    mySprite->runAction(RepeatForever::create(rotateBy1));
+    Camera *cameraExample = Camera::createPerspective(30, (GLfloat) visibleSize.width / visibleSize.height, 10, 500);
+    cameraExample->setPosition3D(Vec3(-10, 10, -10));
+    cameraExample->lookAt(mySprite->getPosition3D(), Vec3(0, 1, 0));
+    //摄像机标识
+    cameraExample->setCameraFlag(CameraFlag::USER1);
+    this->addChild(cameraExample);
     sprite = Sprite::create("HelloWorld.png");
 //    CCASSERT(!sprite, "view = 123456789");
     if (sprite != nullptr) {
