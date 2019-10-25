@@ -17,16 +17,21 @@ bool NewGame::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    mySprite = Sprite3D::create("Lich1.c3b");
-    mySprite->setTexture("Lich-Cyan.png");
+    mySprite = Sprite3D::create("axe.c3b");
+//    mySprite->setTexture("Lich-Cyan.png");
 //    mySprite->setColor(Color3B(255,0,255));
 
-//    auto shader = GLProgram::createWithFilenames("vert0.vert", "frag0.frag");
-//    GLProgramState *state = GLProgramState::create(shader);
+    auto shader = GLProgram::createWithFilenames("text1.vert", "text1.frag");
+    GLProgramState *_state = GLProgramState::create(shader);
 //    state->setUniformVec3()
-//    state->applyUniforms();
+//    _state->applyUniforms();
 //    mySprite->setGLProgram()
-//    mySprite->setGLProgramState(state);
+//    _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+//    _state->setUniformFloat("u_fogStart",10);
+//    _state->setUniformFloat("u_fogEnd",60);
+//    _state->setUniformInt("u_fogEquation" ,0);
+//    _state->setUniformFloat("u_fogDensity",0.03f);
+    mySprite->setGLProgramState(_state);
 
 //    int i = mySprite->getMeshCount();
 
@@ -68,7 +73,7 @@ bool NewGame::init() {
 //        mySprite->runAction(RepeatForever::create(play));//循环播放
 //    }
 
-    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(0, 360, 0));
+    RotateBy *rotateBy1 = RotateBy::create(10, Vec3(360, 0, 0));
     mySprite->runAction(RepeatForever::create(rotateBy1));
     Camera *cameraExample = Camera::createPerspective(30, (GLfloat) visibleSize.width / visibleSize.height, 10, 500);
     cameraExample->setPosition3D(Vec3(-10, 10, -10));
