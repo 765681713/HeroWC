@@ -17,20 +17,23 @@ bool NewGame::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    mySprite = Sprite3D::create("axe.c3b");
-//    mySprite->setTexture("Lich-Cyan.png");
+    mySprite = Sprite3D::create("Lich1.c3b");
+    mySprite->setTexture("Lich-Cyan.png");
 //    mySprite->setColor(Color3B(255,0,255));
 
-    auto shader = GLProgram::createWithFilenames("text1.vert", "text1.frag");
+    Texture2D *newTexture = Director::getInstance()->getTextureCache()->addImage("FIL8365.JPG");
+
+//    auto shader = GLProgram::createWithFilenames("fog.vert", "fog.frag");
+//    auto shader = GLProgram::createWithFilenames("text1.vert", "text1.frag");
+    auto shader = GLProgram::createWithFilenames("text2.vert", "text2.frag");
     GLProgramState *_state = GLProgramState::create(shader);
-//    state->setUniformVec3()
-//    _state->applyUniforms();
-//    mySprite->setGLProgram()
-//    _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-//    _state->setUniformFloat("u_fogStart",10);
-//    _state->setUniformFloat("u_fogEnd",60);
-//    _state->setUniformInt("u_fogEquation" ,0);
-//    _state->setUniformFloat("u_fogDensity",0.03f);
+    _state->setUniformTexture("u_Texture", newTexture);
+//    _state->setUniformVec4("u_fogColor", Vec4(0.5, 0.5, 0.5, 1.0));
+//    _state->setUniformFloat("u_fogStart", 10);
+//    _state->setUniformFloat("u_fogEnd", 60);
+//    _state->setUniformInt("u_fogEquation", 0);
+//    _state->setUniformFloat("u_fogDensity", 0.03f);
+    _state->applyUniforms();
     mySprite->setGLProgramState(_state);
 
 //    int i = mySprite->getMeshCount();
@@ -65,7 +68,7 @@ bool NewGame::init() {
 
     mySprite->setPosition3D(Vec3(visibleSize.width / 2, visibleSize.height / 2, 0));
     mySprite->setCameraMask(1);
-    mySprite->setScale(2);
+    mySprite->setScale(0.5);
     this->addChild(mySprite, 3);
 //    auto animation = Animation3D::create("shiliaoyuan.c3b");
 //    if (animation) {
@@ -87,8 +90,8 @@ bool NewGame::init() {
         sprite->setAnchorPoint(Vec2(1, 0));
         sprite->setPosition(Vec2(visibleSize.width, 0) + origin);
         Rect r = sprite->getCenterRect();
-        __android_log_print(ANDROID_LOG_ERROR, "r.size", "%f,%f", r.size.width, r.size.height);
-        __android_log_print(ANDROID_LOG_ERROR, "r.origin", "%f,%f", r.origin.x, r.origin.y);
+        // __android_log_print(ANDROID_LOG_ERROR, "r.size", "%f,%f", r.size.width, r.size.height);
+        //   __android_log_print(ANDROID_LOG_ERROR, "r.origin", "%f,%f", r.origin.x, r.origin.y);
         this->addChild(sprite, 2);
     }
     auto listener = EventListenerTouchOneByOne::create();
@@ -100,17 +103,17 @@ bool NewGame::init() {
 }
 
 bool NewGame::onTouchBegan(Touch *tTouch, Event *eEvent) {
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.x = %f", tTouch->getLocation().x);
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.y = %f", tTouch->getLocation().y);
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " sprite->getBoundingBox().size.width = %f",
-                        sprite->getBoundingBox().size.width);
-    __android_log_print(ANDROID_LOG_ERROR, NEWGAME, "sprite->getBoundingBox().size.height = %f",
-                        sprite->getBoundingBox().size.height);
+    // __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.x = %f", tTouch->getLocation().x);
+    //  __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " tTouch.y = %f", tTouch->getLocation().y);
+    //  __android_log_print(ANDROID_LOG_ERROR, NEWGAME, " sprite->getBoundingBox().size.width = %f",
+    //                     sprite->getBoundingBox().size.width);
+    //  __android_log_print(ANDROID_LOG_ERROR, NEWGAME, "sprite->getBoundingBox().size.height = %f",
+    //                     sprite->getBoundingBox().size.height);
     if (sprite->getBoundingBox().containsPoint(tTouch->getLocation())) {//判断触摸点是否在目标的范围内
-        __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "true");
+        //     __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "true");
         return true;
     } else {
-        __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "false");
+        //     __android_log_print(ANDROID_LOG_ERROR, "containsPoint = ", "false");
         return false;
     }
 }
