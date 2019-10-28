@@ -26,6 +26,8 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include <math.h>
+
 USING_NS_CC;
 using namespace std;
 
@@ -38,7 +40,16 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref *pSender);
 
+//    void setViewpointCenter(Point position);
 
+    Camera *cameraExample;
+
+    void updateTime(float f);
+
+    Sprite3D *man;
+//    Sprite * bg;
+    TMXTiledMap *_tileMap;
+    TMXLayer *layer2;
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
