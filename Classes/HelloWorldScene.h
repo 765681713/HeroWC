@@ -40,12 +40,14 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref *pSender);
 
-//    void setViewpointCenter(Point position);
+    void setViewpointCenter(Point position);
 
     Camera *cameraExample;
 
     void updateTime(float f);
 
+    int beginX;
+    int beginY;
     Sprite3D *man;
 //    Sprite * bg;
     TMXTiledMap *_tileMap;
